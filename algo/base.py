@@ -100,7 +100,7 @@ class ValueNet(nn.Module):
             e_h = torch.cat([e_h, self.eval_net['prob_emb_linear'](prob)], -1)
         e_q = self.eval_net['final_linear'](e_h)
         predict = F.softmax(e_q / self.temperature, dim=-1)
-        #distribution =  torch.distributions.Categorical(predict)
+        #distribution = torch.distributions.Categorical(predict)
         #actions = distribution.sample().detach().cpu().numpy()
         actions = predict.max(1)[1].detach().cpu().numpy()
         return actions
