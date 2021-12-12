@@ -355,12 +355,12 @@ class MFAC(nn.Module):
         
     def save(self, dir_path, step=0):
         os.makedirs(dir_path, exist_ok=True)
-        file_path = os.path.join(dir_path, "ac_{}".format(step))
+        file_path = os.path.join(dir_path, "mfac_{}".format(step))
         torch.save(self.net.state_dict(), file_path)
         print("[*] Model saved")
         
     def load(self, dir_path, step=0):
-        file_path = os.path.join(dir_path, "ac_{}".format(step))
+        file_path = os.path.join(dir_path, "mfac_{}".format(step))
 
         self.net.load_state_dict(torch.load(file_path))
         print("[*] Loaded model")
