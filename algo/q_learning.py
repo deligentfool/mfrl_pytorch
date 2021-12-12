@@ -22,21 +22,19 @@ class DQN(base.ValueNet):
         batch_num = self.replay_buffer.get_batch_num()
 
         for i in range(batch_num):
-            obs, feat, obs_next, feat_next, dones, rewards, actions, masks = self.replay_buffer.sample()
+            obs, feat, obs_next, feat_next, dones, rewards, acts, masks = self.replay_buffer.sample()
             
             obs = torch.FloatTensor(obs).permute([0, 3, 1, 2]).cuda() if cuda else torch.FloatTensor(obs).permute([0, 3, 1, 2])
             obs_next = torch.FloatTensor(obs_next).permute([0, 3, 1, 2]).cuda() if cuda else torch.FloatTensor(obs_next).permute([0, 3, 1, 2])
             feat = torch.FloatTensor(feat).cuda() if cuda else torch.FloatTensor(feat)
             feat_next = torch.FloatTensor(feat_next).cuda() if cuda else torch.FloatTensor(feat_next)
             acts = torch.LongTensor(acts).cuda() if cuda else torch.LongTensor(acts)
-            act_prob = torch.FloatTensor(act_prob).cuda() if cuda else torch.FloatTensor(act_prob)
-            act_prob_next = torch.FloatTensor(act_prob_next).cuda() if cuda else torch.FloatTensor(act_prob_next)
             rewards = torch.FloatTensor(rewards).cuda() if cuda else torch.FloatTensor(rewards)
             dones = torch.FloatTensor(dones).cuda() if cuda else torch.FloatTensor(dones)
             masks = torch.FloatTensor(masks).cuda() if cuda else torch.FloatTensor(masks)
             
             target_q = self.calc_target_q(obs=obs_next, feature=feat_next, rewards=rewards, dones=dones)
-            loss, q = super().train(obs=obs, feature=feat, target_q=target_q, acts=actions, masks=masks)
+            loss, q = super().train(obs=obs, feature=feat, target_q=target_q, acts=acts, mask=masks)
             
             self.update()
 

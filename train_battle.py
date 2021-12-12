@@ -36,7 +36,7 @@ def linear_decay(epoch, x, y):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--algo', type=str, choices={'ac', 'mfac', 'mfq', 'il'}, help='choose an algorithm from the preset', required=True)
+    parser.add_argument('--algo', type=str, choices={'ac', 'mfac', 'mfq', 'iql'}, help='choose an algorithm from the preset', required=True)
     parser.add_argument('--save_every', type=int, default=20, help='decide the self-play update interval')
     parser.add_argument('--update_every', type=int, default=5, help='decide the udpate interval for q-learning, optional')
     parser.add_argument('--n_round', type=int, default=2000, help='set the trainning round')
